@@ -1,8 +1,36 @@
 * {
     font-size: 36px;
+    color: white;
 }
 
 body {
     background-image: url("../images/plain\ blackboard.jpg"); 
     background-size: cover;
+}
+
+div {
+    display: flex;
+    justify-content: center;
+}
+
+h1 {
+font-size: 136%;
+}
+
+#scores {
+    font-size: 69%;
+}
+
+#hourglass {
+    width: 100px;
+    height: auto;
+}
+
+#button {
+    border: 1px solid white;
+    border-radius: 25px;
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 6px;
+    width: 100px;
 }
