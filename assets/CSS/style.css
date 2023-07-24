@@ -52,17 +52,15 @@ h2 {
     color: red-pink;
 }
 
-.question-area {
-    display: flex;
-    justify-self: center;
-}
-
 #row3 {
     border: 3px solid white;
     border-radius: 25px;
+    align-self: center;
     margin-top: 20px;
     margin-bottom: 300px;
     width: 963px;
+    height: 369px;
+    display: flex;
     flex-direction: column;
     justify-content: center;
 }
@@ -70,7 +68,13 @@ h2 {
 h3, #question-section {
     display: flex;
     flex-direction: column;
-    flex: 1;
+    flex: 100%;
+    align-items: center;
+}
+
+.question-area {
+    display: flex;
+    justify-self: center;
 }
 
 #button {
