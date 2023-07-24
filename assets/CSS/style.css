@@ -8,36 +8,83 @@ body {
     background-size: cover;
 }
 
-#row2 #row3 {
+#container {
+    display: flex;
+    flex-flow: column;
+}
+
+#row2, .question-area {
     display: flex;
     justify-content: center;
     flex-flow: row wrap;
+    align-items: center;
 }
 
 h1 {
-    font-size: 136%;
+    font-size: 125%;
     display: block;
     text-align: center;
+    padding: 15px;
+    margin: 36px;
+    margin-top: 6px;
 }
 
-#scores {
+h2 {
     font-size: 69%;
+}
+
+.scores {
     flex: 1;
 }
+
+/* #high-score {
+    display: none;
+} */
 
 #hourglass {
     width: 100px;
     height: 100px;
+    padding: 10px;
+    margin-left: 25px;
+}
+
+#timer {
+    color: red-pink;
+}
+
+.question-area {
+    display: flex;
+    justify-self: center;
+}
+
+#row3 {
+    border: 3px solid white;
+    border-radius: 25px;
+    margin-top: 20px;
+    margin-bottom: 300px;
+    width: 963px;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h3, #question-section {
+    display: flex;
+    flex-direction: column;
     flex: 1;
 }
 
 #button {
     border: 1px solid white;
+    background-color: #7e3446;
     border-radius: 25px;
     padding: 10px;
     padding-left: 15px;
     padding-right: 6px;
     width: 100px;
-    display: block;
-    text-align: center;
+    /* display: flex; */
+}
+
+.scores:hover + #high-score{
+    display: flex;
+    flex: 1;
 }
