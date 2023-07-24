@@ -8,22 +8,27 @@ body {
     background-size: cover;
 }
 
-div {
+#row2 #row3 {
     display: flex;
     justify-content: center;
+    flex-flow: row wrap;
 }
 
 h1 {
-font-size: 136%;
+    font-size: 136%;
+    display: block;
+    text-align: center;
 }
 
 #scores {
     font-size: 69%;
+    flex: 1;
 }
 
 #hourglass {
     width: 100px;
-    height: auto;
+    height: 100px;
+    flex: 1;
 }
 
 #button {
@@ -33,4 +38,6 @@ font-size: 136%;
     padding-left: 15px;
     padding-right: 6px;
     width: 100px;
+    display: block;
+    text-align: center;
 }
