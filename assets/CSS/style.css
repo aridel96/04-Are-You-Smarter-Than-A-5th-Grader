@@ -52,17 +52,15 @@ h2 {
     color: red-pink;
 }
 
-.question-area {
-    display: flex;
-    justify-self: center;
-}
-
 #row3 {
     border: 3px solid white;
     border-radius: 25px;
+    align-self: center;
     margin-top: 20px;
     margin-bottom: 300px;
     width: 963px;
+    height: 369px;
+    display: flex;
     flex-direction: column;
     justify-content: center;
 }
@@ -70,18 +68,23 @@ h2 {
 h3, #question-section {
     display: flex;
     flex-direction: column;
-    flex: 1;
+    flex: 100%;
+    align-items: center;
+}
+
+.question-area {
+    display: flex;
+    justify-self: center;
 }
 
 #button {
-    border: 1px solid white;
+    border: 3px solid white;
     background-color: #7e3446;
     border-radius: 25px;
     padding: 10px;
     padding-left: 15px;
     padding-right: 6px;
     width: 100px;
-    /* display: flex; */
 }
 
 .scores:hover + #high-score{
