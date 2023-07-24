@@ -78,14 +78,13 @@ h3, #question-section {
 }
 
 #button {
-    border: 1px solid white;
+    border: 3px solid white;
     background-color: #7e3446;
     border-radius: 25px;
     padding: 10px;
     padding-left: 15px;
     padding-right: 6px;
     width: 100px;
-    /* display: flex; */
 }
 
 .scores:hover + #high-score{
