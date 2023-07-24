@@ -8,29 +8,29 @@
     </head>
 
     <body>
-        <div>
+        <div id="container">
             <header id="row1">
                 <h1>Are You Smarter Than A 5th Grader?</h1>
             </header>
             
             <div id="row2">
-                <h2 id="scores">View High Score</h2>
-                <h2 id="high-score"></h2>                                   <!--Hook for high score value -->
+                <h2 class="scores">View High Score</h2>
+                <h2 id="high-score">369</h2>                                   <!--Hook for high score value -->
+                <h2 id="timer">60 seconds left</h2>                                        <!--Hook for timer value-->
                 <img src="./assets/images/Starry night hourglass.gif" alt="animated hourglass timer in outer space" id="hourglass" />
-                <h2 id="timer"></h2>                                        <!--Hook for timer value-->
             </div>
 
             <div id="row3">
-                <div>
+                <div class="question-area">
                     <h3 id="question">ADD QUIZ QUESTIONS</h3>                   <!--Hook for questions-->
-                    <div>
+                    <div class="question-area" id="question-section">
                         <ul id="answers">                                       <!--Hook for list of answers-->
                             Enter Answers Here
                         </ul>
                     </div>
                 </div>
                 
-                <div>
+                <div class="question-area">
                     <h4 id="button">Begin</h4>
                 </div>
             </div>
