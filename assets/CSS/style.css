@@ -34,7 +34,7 @@ h2 {
 }
 
 .scores {
-    flex: 1;
+    flex: left;
 }
 
 /* #high-score {
