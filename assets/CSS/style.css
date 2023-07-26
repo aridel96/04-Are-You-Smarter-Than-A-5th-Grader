@@ -26,38 +26,46 @@ h1 {
     text-align: center;
     padding: 15px;
     margin: 36px;
-    margin-top: 6px;
+    margin-top: 2px;
+    margin-bottom: 15px;
 }
 
-h2 {
-    font-size: 69%;
+nav {
+    display: flex;
 }
+
 
 .scores {
-    flex: left;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 69%;
+    flex: 1;
 }
 
-/* #high-score {
+#high-score {
     display: none;
-} */
+} 
 
 #hourglass {
     width: 100px;
     height: 100px;
-    padding: 10px;
-    margin-left: 25px;
+    padding-right: 10px;
 }
 
 #timer {
-    color: red-pink;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 69%;
 }
 
 #row3 {
     border: 3px solid white;
     border-radius: 25px;
     align-self: center;
-    margin-top: 20px;
-    margin-bottom: 300px;
+    margin-top: 15px;
+    margin-bottom: 96px;
     width: 963px;
     height: 369px;
     display: flex;
@@ -65,7 +73,7 @@ h2 {
     justify-content: center;
 }
 
-h3, #question-section {
+h2, #question-section {
     display: flex;
     flex-direction: column;
     flex: 100%;
@@ -77,9 +85,13 @@ h3, #question-section {
     justify-self: center;
 }
 
-#button {
+#question {
+    font-size: 69%;
+}
+
+.button {
     border: 3px solid white;
-    background-color: #7e3446;
+    background-color: rgba(35, 118, 207, 0.814);
     border-radius: 25px;
     padding: 10px;
     padding-left: 15px;
@@ -87,8 +99,18 @@ h3, #question-section {
     width: 100px;
 }
 
-.scores:hover + #high-score{
+iframe {
+    padding-top: 4px;
+}
+
+.scores:click + #high-score{
     display: flex;
-    flex: 1;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 69%;
+}
+
+.button {
+    display: none;
 }
 
