@@ -110,7 +110,7 @@ iframe {
     font-size: 69%;
 }
 
-.button {
+.button:click {
     display: none;
 }
 
