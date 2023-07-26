@@ -89,7 +89,7 @@ h2, #question-section {
     font-size: 69%;
 }
 
-#button {
+.button {
     border: 3px solid white;
     background-color: rgba(35, 118, 207, 0.814);
     border-radius: 25px;
@@ -108,4 +108,8 @@ iframe {
     justify-content: flex-end;
     align-items: center;
     font-size: 69%;
+}
+
+.button {
+    display: none;
 }
