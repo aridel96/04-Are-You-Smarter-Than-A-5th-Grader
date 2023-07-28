@@ -8,20 +8,20 @@ var answers = []      //answers array
 var questionCount = 0
 
 function beginQuiz() {                              //See README
-    var time = 60
+    var time = 60;
     var timer = setInterval(function() {
         timerEl.textContent = time + " seconds left";
-
-        if(questionCount === questions.length) {
-            clearInterval(timer)
-        }
-
         time--                             //decrements time by 1
 
+        // if(questionCount === questions.length || time === 0) {
+        
+        if(true) {
+        clearInterval(timer)
+        }
     }, 1000)
 }
 
-startButton.addEventListener('click', beginQuiz)
+startButton.addEventListener("click", beginQuiz)
 
 
 // On start the question is first displayed and 
