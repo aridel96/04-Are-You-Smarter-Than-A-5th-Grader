@@ -2,7 +2,7 @@
 var startButton = document.querySelector(".button")
 var timerEl = document.querySelector("#timer")
 var questionEl = document.querySelector("#question")
-var answersEl = document.querySelector("#answers")
+var answersEl = document.getElementById("#answers")
 
 var questions = {                                                     //questions object where the key is the question and the value is the answer
     "Inside which HTML element do we put the JavaScript?": "c",
@@ -171,7 +171,7 @@ var answer                                              //Holds user answer
 
 var questionCount = 0
 var correctCounter 
-var decrementVal = //1 min
+var decrementVal  //1 min
 var wrong = true
 
 function beginQuiz() {                              //See README
@@ -180,6 +180,7 @@ function beginQuiz() {                              //See README
         timerEl.textContent = time + " seconds left";
         time--                             //decrements time by 1
 
+        quiz(questions, multipleChoice, answer)
         // if(questionCount === questions.length || time === 0) {
         
         if(true) {
@@ -189,18 +190,40 @@ function beginQuiz() {                              //See README
 }
 
 function quiz(questions, multipleChoice, answer) {
+    // PLAY SONG WHEN QUIZ BEGINS!
+
+    
     //Print out question
-    for question
-    //Create li element for asnwers
+    for (var quest in questions) {
+        questionEl.textContent = quest
+        
+        var answers = multipleChoice[questionCount]                         //Returns the keys in the multipleChoice object. The keys have objects as a value
+
+        //Create li element for asnwers
+        for (var ans in answers) {
+            console.log(answers[ans])
+            var newLi = document.createElement("li")
+            var choices = document.createTextNode(answers[ans])
+            newLi.appendChild(choices)
+            document.body.answersEl.appendChild(newLi)
+
+        }
+
+        questionCount++
+
+
+        
+
+    }
     //Print out answer
     //Take user input from click on li element
     //Compare correct answer to user answer
     //Increment correctCounter or decrement timer if 
+    //Call to clear timer
 
 }
 
 startButton.addEventListener("click", beginQuiz)
-
 
 // On start the question is first displayed and 
 // then the timer begins (1 min). If the user answers
@@ -209,3 +232,4 @@ startButton.addEventListener("click", beginQuiz)
 // the user has answered all questions OR if the timer 
 // reaches 0 then the game is over and the user is presented
 // text box to enter their initials and save their score
+
