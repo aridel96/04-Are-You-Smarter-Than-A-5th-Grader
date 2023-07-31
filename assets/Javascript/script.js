@@ -2,7 +2,7 @@
 var startButton = document.querySelector(".button")
 var timerEl = document.querySelector("#timer")
 var questionEl = document.querySelector("#question")
-var answersEl = document.getElementById("#answers")
+var answersEl = document.getElementById("answers")
 
 var questions = {                                                     //questions object where the key is the question and the value is the answer
     "Inside which HTML element do we put the JavaScript?": "c",
@@ -173,6 +173,9 @@ var questionCount = 0
 var correctCounter 
 var decrementVal  //1 min
 var wrong = true
+var answers = multipleChoice[questionCount]                         //Returns the keys in the multipleChoice object. The keys have objects as a value
+
+
 
 function beginQuiz() {                              //See README
     var time = 60;
@@ -180,7 +183,7 @@ function beginQuiz() {                              //See README
         timerEl.textContent = time + " seconds left";
         time--                             //decrements time by 1
 
-        quiz(questions, multipleChoice, answer)
+        quiz(questions, multipleChoice)
         // if(questionCount === questions.length || time === 0) {
         
         if(true) {
@@ -189,39 +192,58 @@ function beginQuiz() {                              //See README
     }, 1000)
 }
 
-function quiz(questions, multipleChoice, answer) {
-    // PLAY SONG WHEN QUIZ BEGINS!
 
+
+function quiz(questions, answers) {
+    // PLAY SONG WHEN QUIZ BEGINS!
     
     //Print out question
     for (var quest in questions) {
         questionEl.textContent = quest
         
-        var answers = multipleChoice[questionCount]                         //Returns the keys in the multipleChoice object. The keys have objects as a value
-
-        //Create li element for asnwers
-        for (var ans in answers) {
-            console.log(answers[ans])
-            var newLi = document.createElement("li")
-            var choices = document.createTextNode(answers[ans])
-            newLi.appendChild(choices)
-            document.body.answersEl.appendChild(newLi)
-
+        //Display answers
+        if ("a" in answers) {
+            console.log("a")
+            var choices = listA.textContent(answers.a)
+            listA.appendChild(choices)
+            listA.addEventListener("click", checkAnswer)
         }
-
+        if (b in answers) {
+            console.log("b")
+            var choices = listB.innerHTML(answers[b])
+            listB.appendChild(choices)
+            listB.addEventListener("click", checkAnswer)
+        }
+        if (c in answers) {
+            console.log("c")
+            var choices = document.createTextNode(answers[c])
+            listC.appendChild(choices)
+            listC.addEventListener("click", checkAnswer)
+        }
+        if (d in answers) {
+            console.log("d")
+            var choices = document.createTextNode(answers[d])
+            listD.appendChild(choices)
+            listD.addEventListener("click", checkAnswer)
+        }
         questionCount++
-
-
-        
-
     }
-    //Print out answer
-    //Take user input from click on li element
+}
+
+
+
+function checkAnswer() {
     //Compare correct answer to user answer
     //Increment correctCounter or decrement timer if 
     //Call to clear timer
-
 }
+
+
+
+var listA = document.getElementById("a")
+var listB = document.getElementById("b")
+var listC = document.getElementById("c")
+var listD = document.getElementById("d")
 
 startButton.addEventListener("click", beginQuiz)
 
@@ -233,3 +255,21 @@ startButton.addEventListener("click", beginQuiz)
 // reaches 0 then the game is over and the user is presented
 // text box to enter their initials and save their score
 
+
+
+
+
+
+        // for (var ans in answers) {
+        //     // console.log(answers[ans])
+        //     var choicesCount = 1
+
+        //     while (choicesCount < 5) {
+        //         var newLi = document.createElement("li")
+        //         var choices = document.createTextNode(answers[ans])
+        //         newLi.appendChild(choices)
+        //         answersEl.appendChild(newLi)
+        //         newLi.className = choicesCount.toString()
+        //         choicesCount++
+        //     }
+        // }
