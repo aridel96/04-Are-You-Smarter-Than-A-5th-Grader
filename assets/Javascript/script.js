@@ -274,8 +274,9 @@ function quiz(questions, multipleChoice) {
                 listD.textContent = choiceD
                 listD.addEventListener("click", ansD)
             }
-        questionCount++
         }
+    setTimeout(quiz, 60000)                             //Delays question loading/changing by 1 minute or 60 sec
+    questionCount++
     }
 }
 
@@ -286,12 +287,12 @@ function ansA() {
     //Increment correctCounter or decrement timer if 
     //Call to clear timer
 
-    if (questions[questionCount].answer === "a") {
+    if (questions[questionCount].answer === "a") {              // Displays "correct!" img and increase correct answer counter 
         imgEl.src = "/assets/images/Correct img.gif"  
         correctCounter++
 
     } else {
-        imgEl.src = "/assets/images/Hey Arnold - wrong answer.gif"
+        imgEl.src = "/assets/images/Hey Arnold - wrong answer.gif"      // Displays "Wrong answer" img and sets wrong to true
         wrong = true
         
         // return wrong
@@ -352,8 +353,6 @@ startButton.addEventListener("click", beginQuiz)
 
 
 
-
-
         // for (var ans in answers) {
         //     // console.log(answers[ans])
         //     var choicesCount = 1
@@ -371,7 +370,7 @@ startButton.addEventListener("click", beginQuiz)
 
 
 // To Do:
-// decrease timer by 60 seconds
+// decrease timer by 60 seconds and slow down timer between questions ----------- Why wont setTimeout work? 
 // css for li elements and question element
 // slow down how it displays the question. It displays so quickly without
 //  allowing user to select an answer and then display the next question
