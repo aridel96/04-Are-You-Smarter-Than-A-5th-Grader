@@ -3,7 +3,8 @@ var startButton = document.querySelector(".button")
 var timerEl = document.querySelector("#timer")
 var questionEl = document.querySelector("#question")
 var answersEl = document.getElementById("answers")
-var imgEl = document.getElementById("resultsImg")
+var correctImg = document.getElementById("correctImg")
+var wrongImg = document.getElementById("wrongImg")
 
 var answer                                              //Holds user answer   
 
@@ -14,17 +15,16 @@ var correctCounter
 var decrementVal  //1 min
 var wrong = false
 
-var listA = document.getElementById("a")
-var listB = document.getElementById("b")
-var listC = document.getElementById("c")
-var listD = document.getElementById("d")
+var liA = document.getElementById("a")
+var liB = document.getElementById("b")
+var liC = document.getElementById("c")
+var liD = document.getElementById("d")
 
 var choiceA
 var choiceB
 var choiceC
 var choiceD
 var time = 1500000;
-
 
 
 var questions = [                                                     //questions array with objects inside
@@ -215,10 +215,18 @@ var multipleChoice = [                                       //multiple choice o
     }
 ]
 
+debugger
+var correctAns = questions[questionCount].answer
 
 
-function beginQuiz() {                              //See README
-    var time = 1500000;
+function beginQuiz() { 
+    startButton.style.display = "none"    
+    liA.style.display = "list-item"     
+    liB.style.display = "list-item"                        
+    liC.style.display = "list-item"                        
+    liD.style.display = "list-item"                                       
+
+    var time = 1500000;                                                // See README
     var timer = setInterval(function() {
         timerEl.textContent = time + " seconds left";
         time--                             //decrements time by 1
@@ -240,39 +248,39 @@ function quiz(questions, multipleChoice) {
     //Print out question
     while (questionCount < questions.length) {
         quest = questions[questionCount].question
-        console.log(quest)
+        // console.log(quest)
         questionEl.textContent = quest
 
-        console.log(questionCount)
+        // console.log(questionCount)
 
         for (var choices in multipleChoice[questionCount]) {
             // //Display answer choices
              if (choices === "a") {
                  choiceA = multipleChoice[questionCount].a
-                 console.log(choiceA)
-                 listA.textContent = choiceA
-                 listA.addEventListener("click", ansA)
+                //  console.log(choiceA)
+                 liA.textContent = choiceA
+                 liA.addEventListener("click", ansA)
             }
 
             if (choices === "b") {
                 choiceB = multipleChoice[questionCount].b
-                console.log(choiceB)
-                listB.textContent = choiceB
-                listB.addEventListener("click", ansB)
+                // console.log(choiceB)
+                liB.textContent = choiceB
+                liB.addEventListener("click", ansB)
             }
 
             if (choices === "c") {
                 choiceC = multipleChoice[questionCount].c
-                console.log(choiceC)
-                listC.textContent = choiceC
-                listC.addEventListener("click", ansC)
+                // console.log(choiceC)
+                liC.textContent = choiceC
+                liC.addEventListener("click", ansC)
             }
 
             if (choices === "d") {
                 choiceD = multipleChoice[questionCount].d
-                console.log(choiceD)
-                listD.textContent = choiceD
-                listD.addEventListener("click", ansD)
+                // console.log(choiceD)
+                liD.textContent = choiceD
+                liD.addEventListener("click", ansD)
             }
         }
     setTimeout(quiz, 60000)                             //Delays question loading/changing by 1 minute or 60 sec
@@ -281,18 +289,21 @@ function quiz(questions, multipleChoice) {
 }
 
 
-
 function ansA() {
     //Compare correct answer to user answer
     //Increment correctCounter or decrement timer if 
     //Call to clear timer
 
-    if (questions[questionCount].answer === "a") {              // Displays "correct!" img and increase correct answer counter 
-        imgEl.src = "/assets/images/Correct img.gif"  
+    console.log(quest)
+    console.log(questionCount - 1)
+    console.log(correctAns)
+
+    if (correctAns === "a") {              // Displays "correct!" img and increase correct answer counter 
+        correctImg.style.display = "flex";
         correctCounter++
 
-    } else {
-        imgEl.src = "/assets/images/Hey Arnold - wrong answer.gif"      // Displays "Wrong answer" img and sets wrong to true
+    } else if (correctAns !== "a") {
+        wrongImg.style.display = "flex";        // Displays "Wrong answer" img and sets wrong to true
         wrong = true
         
         // return wrong
@@ -300,12 +311,12 @@ function ansA() {
 }
 
 function ansB() {
-    if (questions[questionCount].answer === "a") {
-        imgEl.src = "/assets/images/Correct img.gif"  
+    if (correctAns === "b") {
+        correctImg.style.display = "flex";
         correctCounter++
 
-    } else {
-        imgEl.src = "/assets/images/Hey Arnold - wrong answer.gif"
+    } else if (correctAns !== "b"){
+        wrongImg.style.display = "flex";
         wrong = true
         time = time - 60
         // return wrong
@@ -313,12 +324,12 @@ function ansB() {
 }
 
 function ansC() {
-    if (questions[questionCount].answer === "a") {
-        imgEl.src = "/assets/images/Correct img.gif"  
+    if (correctAns === "c") {
+        correctImg.style.display = "flex";
         correctCounter++
 
-    } else {
-        imgEl.src = "/assets/images/Hey Arnold - wrong answer.gif"
+    } else if (correctAns !== "c") {
+        wrongImg.style.display = "flex";
         wrong = true
         time = time - 60
         // return wrong
@@ -326,12 +337,12 @@ function ansC() {
 }
 
 function ansD() {
-    if (questions[questionCount].answer === "a") {
-        imgEl.src = "/assets/images/Correct img.gif"  
+    if (correctAns === "d") {
+        correctImg.style.display = "flex";
         correctCounter++
 
-    } else {
-        imgEl.src = "/assets/images/Hey Arnold - wrong answer.gif"
+    } else if (correctAns !== "d") {
+        wrongImg.style.display = "flex";
         wrong = true
         time = time - 60
         // return wrong
