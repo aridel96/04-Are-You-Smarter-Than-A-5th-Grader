@@ -5,6 +5,7 @@ var questionEl = document.querySelector("#question")
 var answersEl = document.getElementById("answers")
 var correctImg = document.getElementById("correctImg")
 var wrongImg = document.getElementById("wrongImg")
+// var questionBox = document.getElementById("row3") width=600px
 
 var answer                                              //Holds user answer   
 
@@ -13,19 +14,23 @@ var choices
 var questionCount = 0
 var correctCounter 
 var decrementVal  //1 min
-var wrong = false
+var wrong = 0
 
 var liA = document.getElementById("a")
 var liB = document.getElementById("b")
 var liC = document.getElementById("c")
 var liD = document.getElementById("d")
 
+liA.style.display = "none";
+liB.style.display = "none";
+liC.style.display = "none";
+liD.style.display = "none";
+
+
 var choiceA
 var choiceB
 var choiceC
 var choiceD
-var time = 1500000;
-
 
 var questions = [                                                     //questions array with objects inside
     {"question":"Inside which HTML element do we put the JavaScript?",
@@ -215,78 +220,100 @@ var multipleChoice = [                                       //multiple choice o
     }
 ]
 
-debugger
-var correctAns = questions[questionCount].answer
-
+var correctAns
+var time = 20;                     //25 min - convert to 25 minutes so for every 60,000 that's 1 min and display that instead of 1500000
 
 function beginQuiz() { 
-    startButton.style.display = "none"    
-    liA.style.display = "list-item"     
-    liB.style.display = "list-item"                        
-    liC.style.display = "list-item"                        
-    liD.style.display = "list-item"                                       
+    startButton.style.display = "none" 
 
-    var time = 1500000;                                                // See README
     var timer = setInterval(function() {
-        timerEl.textContent = time + " seconds left";
-        time--                             //decrements time by 1
+        
+        timerEl.textContent = time + " minutes left";
+
+        liA.textContent = " "
+        liB.textContent = " "
+        liC.textContent = " "
+        liD.textContent = " "    
+    
+        correctImg.style.display = "none"
+        wrongImg.style.display = "none"
 
         quiz(questions, multipleChoice)
-        // if(questionCount === questions.length || time === 0) {
-        
-        if(true) {
-        clearInterval(timer)
+
+        if(questionCount === questions.length | time === 0) {           // If the user has answered all questions or the timer has run out clear the timer
+            clearInterval(timer)
+
+            liA.style.display = "none";
+            liB.style.display = "none";
+            liC.style.display = "none";
+            liD.style.display = "none";
+
+            questionEl.style.fontSize = "69%";
+            questionEl.textContent = "Your Score Is: " + correctCounter + " Out Of 25!";
         }
-    }, 1000)
+    }, 30000)
+    
+    time--                             //decrements time by 1
+
+    // setTimeout(beginQuiz, 60000)                             //Delays question loading/changing by 1 minute or 120 sec
+
 }
 
 
 
 function quiz(questions, multipleChoice) {
+    alert("We've made it!")
     // PLAY SONG WHEN QUIZ BEGINS!
-    
+
     //Print out question
-    while (questionCount < questions.length) {
-        quest = questions[questionCount].question
-        // console.log(quest)
-        questionEl.textContent = quest
+    quest = questions[questionCount].question
+    questionEl.textContent = quest
+    correctAns = questions[questionCount].answer
 
-        // console.log(questionCount)
+    liA.style.display = "list-item"     
+    liB.style.display = "list-item"                        
+    liC.style.display = "list-item"                        
+    liD.style.display = "list-item" 
 
-        for (var choices in multipleChoice[questionCount]) {
-            // //Display answer choices
-             if (choices === "a") {
-                 choiceA = multipleChoice[questionCount].a
-                //  console.log(choiceA)
-                 liA.textContent = choiceA
-                 liA.addEventListener("click", ansA)
-            }
+    console.log(quest)
+    console.log(questionCount - 1)
+    console.log(correctAns)
 
-            if (choices === "b") {
-                choiceB = multipleChoice[questionCount].b
-                // console.log(choiceB)
-                liB.textContent = choiceB
-                liB.addEventListener("click", ansB)
-            }
 
-            if (choices === "c") {
-                choiceC = multipleChoice[questionCount].c
-                // console.log(choiceC)
-                liC.textContent = choiceC
-                liC.addEventListener("click", ansC)
-            }
-
-            if (choices === "d") {
-                choiceD = multipleChoice[questionCount].d
-                // console.log(choiceD)
-                liD.textContent = choiceD
-                liD.addEventListener("click", ansD)
-            }
+    for (var choices in multipleChoice[questionCount]) {
+        // //Display answer choices
+         if (choices === "a") {
+             choiceA = multipleChoice[questionCount].a
+            //  console.log(choiceA)
+             liA.textContent = choiceA
+             liA.addEventListener("click", ansA)
         }
-    setTimeout(quiz, 60000)                             //Delays question loading/changing by 1 minute or 60 sec
-    questionCount++
+
+        if (choices === "b") {
+                choiceB = multipleChoice[questionCount].b
+            // console.log(choiceB)
+            liB.textContent = choiceB
+            liB.addEventListener("click", ansB)
+        } 
+
+        if (choices === "c") {
+            choiceC = multipleChoice[questionCount].c
+            // console.log(choiceC)
+            liC.textContent = choiceC
+            liC.addEventListener("click", ansC)
+        } 
+
+        if (choices === "d") {
+            choiceD = multipleChoice[questionCount].d
+            // console.log(choiceD)
+            liD.textContent = choiceD
+            liD.addEventListener("click", ansD)
+        }
     }
+
+    questionCount++
 }
+
 
 
 function ansA() {
@@ -294,19 +321,17 @@ function ansA() {
     //Increment correctCounter or decrement timer if 
     //Call to clear timer
 
-    console.log(quest)
-    console.log(questionCount - 1)
-    console.log(correctAns)
-
     if (correctAns === "a") {              // Displays "correct!" img and increase correct answer counter 
         correctImg.style.display = "flex";
         correctCounter++
 
-    } else if (correctAns !== "a") {
-        wrongImg.style.display = "flex";        // Displays "Wrong answer" img and sets wrong to true
-        wrong = true
-        
-        // return wrong
+        liA.removeEventListener
+        liB.removeEventListener
+        liC.removeEventListener
+        liD.removeEventListener
+
+    } else{
+        return wrongAns();
     }
 }
 
@@ -315,11 +340,12 @@ function ansB() {
         correctImg.style.display = "flex";
         correctCounter++
 
+        liA.removeEventListener
+        liB.removeEventListener
+        liC.removeEventListener
+        liD.removeEventListener             // Removes event listener so that the user doesn't keep selecting other options until the next question loads
     } else if (correctAns !== "b"){
-        wrongImg.style.display = "flex";
-        wrong = true
-        time = time - 60
-        // return wrong
+        return wrongAns();
     }
 }
 
@@ -328,28 +354,36 @@ function ansC() {
         correctImg.style.display = "flex";
         correctCounter++
 
+        liA.removeEventListener
+        liB.removeEventListener
+        liC.removeEventListener
+        liD.removeEventListener    
     } else if (correctAns !== "c") {
-        wrongImg.style.display = "flex";
-        wrong = true
-        time = time - 60
-        // return wrong
+        return wrongAns();
     }
 }
 
 function ansD() {
     if (correctAns === "d") {
-        correctImg.style.display = "flex";
         correctCounter++
 
-    } else if (correctAns !== "d") {
-        wrongImg.style.display = "flex";
-        wrong = true
-        time = time - 60
-        // return wrong
+        
+        liA.removeEventListener
+        liB.removeEventListener
+        liC.removeEventListener
+        liD.removeEventListener  
+
+        correctImg.style.display = "flex";  
+    } else {
+        return wrongAns();
     }
 }
 
-
+function wrongAns() {
+    wrongImg.style.display = "flex";        // Displays "Wrong answer" img and sets wrong to true
+    time--
+    return time
+}
 
 startButton.addEventListener("click", beginQuiz)
 
@@ -363,25 +397,22 @@ startButton.addEventListener("click", beginQuiz)
 
 
 
-
-        // for (var ans in answers) {
-        //     // console.log(answers[ans])
-        //     var choicesCount = 1
-
-        //     while (choicesCount < 5) {
-        //         var newLi = document.createElement("li")
-        //         var choices = document.createTextNode(answers[ans])
-        //         newLi.appendChild(choices)
-        //         answersEl.appendChild(newLi)
-        //         newLi.className = choicesCount.toString()
-        //         choicesCount++
-        //     }
-        // }
+// var oneMinute = 0           // keeps count until reaching 60
+// var twentyFiveMin = 25
+// console.log(time)
+// oneMinute++
+// if (oneMinute === 60) {
+//     oneMinute = 0
+//     twentyFiveMin--
+//     timerEl.textContent = twentyFiveMin + " minutes left";
+// }
 
 
 
-// To Do:
-// decrease timer by 60 seconds and slow down timer between questions ----------- Why wont setTimeout work? 
-// css for li elements and question element
-// slow down how it displays the question. It displays so quickly without
-//  allowing user to select an answer and then display the next question
+// TO DO:
+// decrease timer by 60 seconds and slow down timer between questions 
+    // setInterval is displaying images after set time, but how do I decrease time? 
+    // set it for 30 secs and every 2 runs is 1 min? 
+    // timer is lagging and not displaying questions right away
+
+// css for width of question area
