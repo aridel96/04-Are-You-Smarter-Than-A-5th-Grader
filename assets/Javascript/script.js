@@ -251,7 +251,7 @@ function beginQuiz() {
             questionEl.style.fontSize = "69%";
             questionEl.textContent = "Your Score Is: " + correctCounter + " Out Of 25!";
         }
-    }, 30000)
+    }, 10000)
     
     time--                             //decrements time by 1
 
@@ -414,5 +414,8 @@ startButton.addEventListener("click", beginQuiz)
     // setInterval is displaying images after set time, but how do I decrease time? 
     // set it for 30 secs and every 2 runs is 1 min? 
     // timer is lagging and not displaying questions right away
+    // Fix time not displaying anymore
 
 // css for width of question area
+
+// Not displaying timer image???
