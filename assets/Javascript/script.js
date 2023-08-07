@@ -60,7 +60,7 @@ var questions = [                                                     //question
     {"question": "How can you add a comment in a JavaScript?",
     "answer": "c"},
     {"question": "How to insert a comment that has more than one line?",
-    "answer": "c"},
+    "answer": "b"},
     {"question": "What is the correct way to write a JavaScript array?",
     "answer": "b"},
     {"question": "How do you round the number 7.25, to the nearest integer?",
@@ -251,7 +251,7 @@ function beginQuiz() {
             questionEl.style.fontSize = "69%";
             questionEl.textContent = "Your Score Is: " + correctCounter + " Out Of 25!";
         }
-    }, 10000)
+    }, 15000)
     
     time--                             //decrements time by 1
 

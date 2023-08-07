@@ -67,7 +67,7 @@ nav {
     margin-top: 15px;
     margin-bottom: 96px;
     width: 963px;
-    height: 369px;
+    height: 693px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -144,7 +144,7 @@ iframe {
     font-size: 69%;
 }
 
-.button:click >{
+/* .button:click >{
     display: none;
-}
+} */
 
