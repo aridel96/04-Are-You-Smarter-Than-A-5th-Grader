@@ -15,6 +15,7 @@ var questionCount = 0
 var correctCounter 
 var decrementVal  //1 min
 var wrong = 0
+var counter = 1                 // counts if 2 questions have passed since each question is 30 seconds. This helps decrease timer displayed to users
 
 var liA = document.getElementById("a")
 var liB = document.getElementById("b")
@@ -41,8 +42,8 @@ var questions = [                                                     //question
     "answer": "c"},
     {"question": "What is the correct syntax for reffering to an external script called xxx.js",
     "answer": "b"},
-    {"question": "The external Javascript file must contain the <Script> tag?",
-    "answer": "b"},
+    // {"question": "The external Javascript file must contain the <Script> tag?", //R
+    // "answer": "b"},
     {"question": "How do you write 'Hello World' in an alert box?",
     "answer": "b"},
     {"question": "How do you create a function in JavaScript?",
@@ -59,22 +60,22 @@ var questions = [                                                     //question
     "answer": "a"},
     {"question": "How can you add a comment in a JavaScript?",
     "answer": "c"},
-    {"question": "How to insert a comment that has more than one line?",
-    "answer": "b"},
+    // {"question": "How to insert a comment that has more than one line?", //R
+    // "answer": "b"},
     {"question": "What is the correct way to write a JavaScript array?",
     "answer": "b"},
     {"question": "How do you round the number 7.25, to the nearest integer?",
     "answer": "c"},
     {"question": "How do you find the number with the highest value of x and y?",
     "answer": "c"},
-    {"question": "What is the correct JavaScript syntax for opening a new window called 'w2'?",
-    "answer": "a"},
+    // {"question": "What is the correct JavaScript syntax for opening a new window called 'w2'?", //R
+    // "answer": "a"},
     {"question": "JavaScript is the same as Java",
     "answer": "a"},
-    {"question": "How can you detect the client's browser name?",
-    "answer": "c"},
-    {"question": "Which event occurs when the user clicks on an HTML element?",
-    "answer": "d"},
+    // {"question": "How can you detect the client's browser name?", //R
+    // "answer": "c"},
+    // {"question": "Which event occurs when the user clicks on an HTML element?",  //R
+    // "answer": "d"},
     {"question": "How do you declare a JavaScript variable?",
     "answer": "b"},
     {"question": "Which operator is used to assign a value to a variable?",
@@ -108,15 +109,15 @@ var multipleChoice = [                                       //multiple choice o
         b: "<script src='xxx.js'>",
         c: "<script href='xxx.js'>"
     },
+    // {
+    //     a: "True",
+    //     b: "False"
+    // },
     {
-        a: "True",
-        b: "False"
-    },
-    {
-        a: "alertBox('Hello World');",
-        b: "alert('Hello World');",
-        c: "msg('Hello World');",
-        d: "msgBox('Hello World');"
+         a: "alertBox('Hello World');",
+         b: "alert('Hello World');",
+         c: "msg('Hello World');",
+         d: "msgBox('Hello World');"
     },
     {
         a: "function:myFunction()",
@@ -161,12 +162,12 @@ var multipleChoice = [                                       //multiple choice o
         b: "//This comment has more than one line//",
         c: "/*This comment has more than one line*/"
     },
-    {
-        a: "var colors = (1:'red', 2:'green', 3:'blue')",
-        b: "var colors = ['red', 'green', 'blue']",
-        c: "var colors = 'red', 'green', 'blue'",
-        d: "var colors = 1 =('red'), 2 = ('green'), 3 = ('blue')"
-    },
+    // {
+    //     a: "var colors = (1:'red', 2:'green', 3:'blue')",
+    //     b: "var colors = ['red', 'green', 'blue']",
+    //     c: "var colors = 'red', 'green', 'blue'",
+    //     d: "var colors = 1 =('red'), 2 = ('green'), 3 = ('blue')"
+    // },
     {
         a: "Math.rnd(7.25)",
         b: "round(7.25)",
@@ -179,25 +180,25 @@ var multipleChoice = [                                       //multiple choice o
         c: "Math.max(x,y)",
         d: "Math.ceil(x,y)"
     },
-    {
-        a: "w2 = window.open('http://www.myWebsite.com');",
-        b: "w2 = window.new('http://www.myWebsite.com');"
-    },
+    // {
+    //     a: "w2 = window.open('http://www.myWebsite.com');",
+    //     b: "w2 = window.new('http://www.myWebsite.com');"
+    // },
     {
         a: "False",
         b: "True"
     },
-    {
-        a: "browser.name",
-        b: "client.navName",
-        c: "navigator.appName"
-    },
-    {
-        a: "onmouseover",
-        b: "onmouseclick",
-        c: "onchange",
-        d: "onclick"
-    },
+    // {
+    //     a: "browser.name",
+    //     b: "client.navName",
+    //     c: "navigator.appName"
+    // },
+    // {
+    //     a: "onmouseover",
+    //     b: "onmouseclick",
+    //     c: "onchange",
+    //     d: "onclick"
+    // },
     {
         a: "v carName",
         b: "var carName",
@@ -221,10 +222,13 @@ var multipleChoice = [                                       //multiple choice o
 ]
 
 var correctAns
-var time = 20;                     //25 min - convert to 25 minutes so for every 60,000 that's 1 min and display that instead of 1500000
+var time = 10;                     
 
 function beginQuiz() { 
     startButton.style.display = "none" 
+
+    timerEl.textContent = time + " minutes left";
+    quiz(questions, multipleChoice)
 
     var timer = setInterval(function() {
         
@@ -251,9 +255,9 @@ function beginQuiz() {
             questionEl.style.fontSize = "69%";
             questionEl.textContent = "Your Score Is: " + correctCounter + " Out Of 25!";
         }
-    }, 15000)
+    }, 30000)
     
-    time--                             //decrements time by 1
+    // time--                             //decrements time by 1
 
     // setTimeout(beginQuiz, 60000)                             //Delays question loading/changing by 1 minute or 120 sec
 
@@ -311,6 +315,10 @@ function quiz(questions, multipleChoice) {
         }
     }
 
+    counter++
+    if ((counter % 2) === 0) {                    // Checks to see if the counter is divisible by 2 - in other words has the setInterval function passed twice (1 minute) 
+        time--
+    }
     questionCount++
 }
 
@@ -410,12 +418,9 @@ startButton.addEventListener("click", beginQuiz)
 
 
 // TO DO:
-// decrease timer by 60 seconds and slow down timer between questions 
-    // setInterval is displaying images after set time, but how do I decrease time? 
-    // set it for 30 secs and every 2 runs is 1 min? 
-    // timer is lagging and not displaying questions right away
-    // Fix time not displaying anymore
-
+    // Why isn't the EventListener removed when using removeEventListener? 
+    // Why isn't correctCounter being added and displayed?
+    
 // css for width of question area
 
 // Not displaying timer image???
