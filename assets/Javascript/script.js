@@ -8,14 +8,16 @@ var wrongImg = document.getElementById("wrongImg")
 // var questionBox = document.getElementById("row3") width=600px
 
 var answer                                              //Holds user answer   
+var user
 
 var quest
 var choices 
 var questionCount = 0
-var correctCounter 
+var correctCounter = 0
 var decrementVal  //1 min
 var wrong = 0
 var counter = 1                 // counts if 2 questions have passed since each question is 30 seconds. This helps decrease timer displayed to users
+var highScore = 0
 
 var liA = document.getElementById("a")
 var liB = document.getElementById("b")
@@ -254,6 +256,20 @@ function beginQuiz() {
 
             questionEl.style.fontSize = "69%";
             questionEl.textContent = "Your Score Is: " + correctCounter + " Out Of 25!";
+
+            user = prompt("Enter your initials: ");
+
+            if (correctCounter > highScore) {
+                highScore = correctCounter
+                questionEl.textContent = "Congratulations on your high score!";
+                
+                localStorage.setItem('userName', 'user');
+                localStorage.setItem('score', 'highScore');
+            } else {
+                localStorage.setItem('userName', 'user');
+                localStorage.setItem('score', 'correctCounter');
+            }
+
         }
     }, 30000)
     
@@ -279,37 +295,28 @@ function quiz(questions, multipleChoice) {
     liC.style.display = "list-item"                        
     liD.style.display = "list-item" 
 
-    console.log(quest)
-    console.log(questionCount - 1)
-    console.log(correctAns)
-
-
     for (var choices in multipleChoice[questionCount]) {
         // //Display answer choices
          if (choices === "a") {
              choiceA = multipleChoice[questionCount].a
-            //  console.log(choiceA)
              liA.textContent = choiceA
              liA.addEventListener("click", ansA)
         }
 
         if (choices === "b") {
-                choiceB = multipleChoice[questionCount].b
-            // console.log(choiceB)
+            choiceB = multipleChoice[questionCount].b
             liB.textContent = choiceB
             liB.addEventListener("click", ansB)
         } 
 
         if (choices === "c") {
             choiceC = multipleChoice[questionCount].c
-            // console.log(choiceC)
             liC.textContent = choiceC
             liC.addEventListener("click", ansC)
         } 
 
         if (choices === "d") {
             choiceD = multipleChoice[questionCount].d
-            // console.log(choiceD)
             liD.textContent = choiceD
             liD.addEventListener("click", ansD)
         }
@@ -337,6 +344,8 @@ function ansA() {
         liB.removeEventListener
         liC.removeEventListener
         liD.removeEventListener
+        
+        return correctCounter;
 
     } else{
         return wrongAns();
@@ -352,6 +361,9 @@ function ansB() {
         liB.removeEventListener
         liC.removeEventListener
         liD.removeEventListener             // Removes event listener so that the user doesn't keep selecting other options until the next question loads
+        
+        return correctCounter;
+
     } else if (correctAns !== "b"){
         return wrongAns();
     }
@@ -365,7 +377,10 @@ function ansC() {
         liA.removeEventListener
         liB.removeEventListener
         liC.removeEventListener
-        liD.removeEventListener    
+        liD.removeEventListener   
+
+        return correctCounter;
+ 
     } else if (correctAns !== "c") {
         return wrongAns();
     }
@@ -374,14 +389,15 @@ function ansC() {
 function ansD() {
     if (correctAns === "d") {
         correctCounter++
-
+        correctImg.style.display = "flex";  
         
         liA.removeEventListener
         liB.removeEventListener
         liC.removeEventListener
         liD.removeEventListener  
 
-        correctImg.style.display = "flex";  
+        return correctCounter;
+
     } else {
         return wrongAns();
     }
@@ -421,6 +437,7 @@ startButton.addEventListener("click", beginQuiz)
     // Why isn't the EventListener removed when using removeEventListener? 
     // Why isn't correctCounter being added and displayed?
     
+    // Use localStorage to save High Score
 // css for width of question area
 
 // Not displaying timer image???
