@@ -143,8 +143,7 @@ iframe {
     align-items: center;
     font-size: 69%;
 }
-
-/* .button:click >{
-    display: none;
-} */
-
+ 
+.choice:hover {
+    background-color: rgb(189, 43, 226);
+}
