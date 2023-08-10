@@ -42,7 +42,7 @@ nav {
     font-size: 69%;
     flex: 1;
 }
-
+ 
 #high-score {
     display: none;
 } 
@@ -135,13 +135,6 @@ li {
 
 iframe {
     padding-top: 4px;
-}
-
-.scores:click + #high-score{
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    font-size: 69%;
 }
  
 .choice:hover {
