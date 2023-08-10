@@ -246,6 +246,7 @@ function beginQuiz() {
 
         quiz(questions, multipleChoice)
 
+        //Call to clear timer
         if(questionCount === questions.length | time === 0) {           // If the user has answered all questions or the timer has run out clear the timer
             clearInterval(timer)
 
@@ -259,31 +260,25 @@ function beginQuiz() {
 
             user = prompt("Enter your initials: ");
 
-            if (correctCounter > highScore) {
+            if (correctCounter > highScore) {                   
                 highScore = correctCounter
                 questionEl.textContent = "Congratulations on your high score!";
                 
-                localStorage.setItem('userName', 'user');
+                localStorage.setItem('userName', 'user');               // Saves user's initials and new high score to localStorage
                 localStorage.setItem('score', 'highScore');
             } else {
                 localStorage.setItem('userName', 'user');
-                localStorage.setItem('score', 'correctCounter');
+                localStorage.setItem('score', 'correctCounter');        // saves user's score to localStorage
             }
 
         }
     }, 30000)
-    
-    // time--                             //decrements time by 1
-
-    // setTimeout(beginQuiz, 60000)                             //Delays question loading/changing by 1 minute or 120 sec
-
 }
 
 
 
 function quiz(questions, multipleChoice) {
     alert("We've made it!")
-    // PLAY SONG WHEN QUIZ BEGINS!
 
     //Print out question
     quest = questions[questionCount].question
@@ -334,16 +329,15 @@ function quiz(questions, multipleChoice) {
 function ansA() {
     //Compare correct answer to user answer
     //Increment correctCounter or decrement timer if 
-    //Call to clear timer
 
     if (correctAns === "a") {              // Displays "correct!" img and increase correct answer counter 
+        liB.removeEventListener("click", beginQuiz);
+        liC.removeEventListener("click", beginQuiz);
+        liD.removeEventListener("click", beginQuiz);
+        liA.removeEventListener("click", beginQuiz);
+
         correctImg.style.display = "flex";
         correctCounter++
-
-        liA.removeEventListener
-        liB.removeEventListener
-        liC.removeEventListener
-        liD.removeEventListener
         
         return correctCounter;
 
@@ -354,14 +348,14 @@ function ansA() {
 
 function ansB() {
     if (correctAns === "b") {
+        liA.removeEventListener("click", beginQuiz);
+        liC.removeEventListener("click", beginQuiz);
+        liD.removeEventListener("click", beginQuiz);             // Removes event listener so that the user doesn't keep selecting other options until the next question loads
+        liB.removeEventListener("click", beginQuiz);
+
         correctImg.style.display = "flex";
         correctCounter++
 
-        liA.removeEventListener
-        liB.removeEventListener
-        liC.removeEventListener
-        liD.removeEventListener             // Removes event listener so that the user doesn't keep selecting other options until the next question loads
-        
         return correctCounter;
 
     } else if (correctAns !== "b"){
@@ -371,13 +365,13 @@ function ansB() {
 
 function ansC() {
     if (correctAns === "c") {
+        liA.removeEventListener("click", beginQuiz);
+        liB.removeEventListener("click", beginQuiz);
+        liD.removeEventListener("click", beginQuiz);  
+        liC.removeEventListener("click", beginQuiz);
+
         correctImg.style.display = "flex";
         correctCounter++
-
-        liA.removeEventListener
-        liB.removeEventListener
-        liC.removeEventListener
-        liD.removeEventListener   
 
         return correctCounter;
  
@@ -388,13 +382,13 @@ function ansC() {
 
 function ansD() {
     if (correctAns === "d") {
+        liA.removeEventListener("click", beginQuiz);
+        liB.removeEventListener("click", beginQuiz);
+        liC.removeEventListener("click", beginQuiz);
+        liD.removeEventListener("click", beginQuiz);
+
         correctCounter++
         correctImg.style.display = "flex";  
-        
-        liA.removeEventListener
-        liB.removeEventListener
-        liC.removeEventListener
-        liD.removeEventListener  
 
         return correctCounter;
 
@@ -435,9 +429,5 @@ startButton.addEventListener("click", beginQuiz)
 
 // TO DO:
     // Why isn't the EventListener removed when using removeEventListener? 
-    // Why isn't correctCounter being added and displayed?
     
-    // Use localStorage to save High Score
-// css for width of question area
-
-// Not displaying timer image???
+    // Display High Score
