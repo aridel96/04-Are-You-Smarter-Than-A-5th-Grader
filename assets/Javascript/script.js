@@ -5,10 +5,11 @@ var questionEl = document.querySelector("#question")
 var answersEl = document.getElementById("answers")
 var correctImg = document.getElementById("correctImg")
 var wrongImg = document.getElementById("wrongImg")
-// var questionBox = document.getElementById("row3") width=600px
+var scoreButton = document.querySelector(".scores")
+var viewHigh = document.getElementById("high-score")
 
 var answer                                              //Holds user answer   
-var user
+var user = " "
 
 var quest
 var choices 
@@ -224,12 +225,12 @@ var multipleChoice = [                                       //multiple choice o
 ]
 
 var correctAns
-var time = 10;                     
+var time = 9;                     
 
 function beginQuiz() { 
     startButton.style.display = "none" 
 
-    timerEl.textContent = time + " minutes left";
+    timerEl.textContent = "10 minutes left";
     quiz(questions, multipleChoice)
 
     var timer = setInterval(function() {
@@ -247,7 +248,7 @@ function beginQuiz() {
         quiz(questions, multipleChoice)
 
         //Call to clear timer
-        if(questionCount === questions.length | time === 0) {           // If the user has answered all questions or the timer has run out clear the timer
+        if(time === 0 || questionCount === questions.length) {           // If the user has answered all questions or the timer has run out clear the timer
             clearInterval(timer)
 
             liA.style.display = "none";
@@ -265,12 +266,14 @@ function beginQuiz() {
                 questionEl.textContent = "Congratulations on your high score!";
                 
                 localStorage.setItem('userName', 'user');               // Saves user's initials and new high score to localStorage
-                localStorage.setItem('score', 'highScore');
-            } else {
-                localStorage.setItem('userName', 'user');
-                localStorage.setItem('score', 'correctCounter');        // saves user's score to localStorage
-            }
+                localStorage.setItem('highestScore', 'highScore');
 
+                localStorage.getItem(userName)
+                localStorage.getItem(highScore)
+            } else {
+                localStorage.setItem('loser', 'user');
+                localStorage.setItem('loserScore', 'correctCounter');        // saves user's score to localStorage
+            }
         }
     }, 30000)
 }
@@ -403,7 +406,22 @@ function wrongAns() {
     return time
 }
 
+
+
+function viewScores() {
+    scoreButton.style.display = "none";
+
+    viewHigh.style.display = "flex";
+    viewHigh.style.justifyContent = "flex-end";
+    viewHigh.style.alignItems = "center";
+    viewHigh.style.fontSize = "69%";
+
+    viewHigh.textContent = user + " " + highScore;
+}
+
 startButton.addEventListener("click", beginQuiz)
+
+scoreButton.addEventListener("click", viewScores)
 
 // On start the question is first displayed and 
 // then the timer begins (1 min). If the user answers
@@ -425,9 +443,3 @@ startButton.addEventListener("click", beginQuiz)
 //     timerEl.textContent = twentyFiveMin + " minutes left";
 // }
 
-
-
-// TO DO:
-    // Why isn't the EventListener removed when using removeEventListener? 
-    
-    // Display High Score
