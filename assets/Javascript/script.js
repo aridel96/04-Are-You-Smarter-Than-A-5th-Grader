@@ -8,33 +8,24 @@ var wrongImg = document.getElementById("wrongImg")
 var scoreButton = document.querySelector(".scores")
 var viewHigh = document.getElementById("high-score")
 
-var answer                                              //Holds user answer   
-var user = " "
+var user = localStorage.getItem("userName")
 
 var quest
-var choices 
 var questionCount = 0
 var correctCounter = 0
-var decrementVal  //1 min
-var wrong = 0
-var counter = 1                 // counts if 2 questions have passed since each question is 30 seconds. This helps decrease timer displayed to users
-var highScore = 0
+var highScore = localStorage.getItem("highestScore")
 
 var liA = document.getElementById("a")
 var liB = document.getElementById("b")
 var liC = document.getElementById("c")
 var liD = document.getElementById("d")
 
-liA.style.display = "none";
-liB.style.display = "none";
-liC.style.display = "none";
-liD.style.display = "none";
-
-
 var choiceA
 var choiceB
 var choiceC
 var choiceD
+
+var timer
 
 var questions = [                                                     //questions array with objects inside
     {"question":"Inside which HTML element do we put the JavaScript?",
@@ -225,57 +216,58 @@ var multipleChoice = [                                       //multiple choice o
 ]
 
 var correctAns
-var time = 9;                     
+var time = 3;                     
 
 function beginQuiz() { 
     startButton.style.display = "none" 
 
-    timerEl.textContent = "10 minutes left";
+    liA.style.display = "none";
+    liB.style.display = "none";
+    liC.style.display = "none";
+    liD.style.display = "none";
+
+    timerEl.textContent = "3 minutes left";
     quiz(questions, multipleChoice)
 
-    var timer = setInterval(function() {
-        
+    timer = setInterval(function() {
+        time--
         timerEl.textContent = time + " minutes left";
+    }, 60000)
+}
 
-        liA.textContent = " "
-        liB.textContent = " "
-        liC.textContent = " "
-        liD.textContent = " "    
-    
-        correctImg.style.display = "none"
-        wrongImg.style.display = "none"
+function nextQuestion() {
+    liA.textContent = " "                       // Clears list items or answer choices
+    liB.textContent = " "
+    liC.textContent = " "
+    liD.textContent = " "    
 
-        quiz(questions, multipleChoice)
+    correctImg.style.display = "none"           // Clears images
+    wrongImg.style.display = "none"
 
-        //Call to clear timer
-        if(time === 0 || questionCount === questions.length) {           // If the user has answered all questions or the timer has run out clear the timer
-            clearInterval(timer)
 
-            liA.style.display = "none";
-            liB.style.display = "none";
-            liC.style.display = "none";
-            liD.style.display = "none";
+    //Call to clear timer
+    if(time === 0 || questionCount === questions.length) {           // If the user has answered all questions or the timer has run out clear the timer
+        clearInterval(timer)
 
-            questionEl.style.fontSize = "69%";
-            questionEl.textContent = "Your Score Is: " + correctCounter + " Out Of 25!";
+        liA.style.display = "none";
+        liB.style.display = "none";
+        liC.style.display = "none";
+        liD.style.display = "none";
 
+        questionEl.style.fontSize = "69%";
+        questionEl.textContent = "Your Score Is: " + correctCounter + " Out Of 25!";
+
+        if (correctCounter > highScore) {       
             user = prompt("Enter your initials: ");
-
-            if (correctCounter > highScore) {                   
-                highScore = correctCounter
-                questionEl.textContent = "Congratulations on your high score!";
-                
-                localStorage.setItem('userName', 'user');               // Saves user's initials and new high score to localStorage
-                localStorage.setItem('highestScore', 'highScore');
-
-                localStorage.getItem(userName)
-                localStorage.getItem(highScore)
-            } else {
-                localStorage.setItem('loser', 'user');
-                localStorage.setItem('loserScore', 'correctCounter');        // saves user's score to localStorage
-            }
+            
+            highScore = correctCounter
+            questionEl.textContent = "Congratulations on your high score!";
+            
+            localStorage.setItem('userName', 'user');               // Saves user's initials and new high score to localStorage
+            localStorage.setItem('highestScore', highScore);
         }
-    }, 30000)
+    }
+    quiz(questions, multipleChoice)
 }
 
 
@@ -298,107 +290,47 @@ function quiz(questions, multipleChoice) {
          if (choices === "a") {
              choiceA = multipleChoice[questionCount].a
              liA.textContent = choiceA
-             liA.addEventListener("click", ansA)
         }
 
         if (choices === "b") {
             choiceB = multipleChoice[questionCount].b
             liB.textContent = choiceB
-            liB.addEventListener("click", ansB)
         } 
 
         if (choices === "c") {
             choiceC = multipleChoice[questionCount].c
             liC.textContent = choiceC
-            liC.addEventListener("click", ansC)
         } 
 
         if (choices === "d") {
             choiceD = multipleChoice[questionCount].d
             liD.textContent = choiceD
-            liD.addEventListener("click", ansD)
         }
-    }
-
-    counter++
-    if ((counter % 2) === 0) {                    // Checks to see if the counter is divisible by 2 - in other words has the setInterval function passed twice (1 minute) 
-        time--
     }
     questionCount++
 }
 
 
 
-function ansA() {
+function ans(letter) {
     //Compare correct answer to user answer
-    //Increment correctCounter or decrement timer if 
+    //Increment correctCounter if correct or decrement timer if wrong
 
-    if (correctAns === "a") {              // Displays "correct!" img and increase correct answer counter 
-        liB.removeEventListener("click", beginQuiz);
-        liC.removeEventListener("click", beginQuiz);
-        liD.removeEventListener("click", beginQuiz);
-        liA.removeEventListener("click", beginQuiz);
-
+    if (correctAns === letter) {              // Displays "correct!" img and increase correct answer counter 
         correctImg.style.display = "flex";
         correctCounter++
         
+        nextQuestion()
         return correctCounter;
 
     } else{
+        wrongAns()                              // Calls wrongAns and then loads next question
+        nextQuestion()
         return wrongAns();
     }
+
 }
 
-function ansB() {
-    if (correctAns === "b") {
-        liA.removeEventListener("click", beginQuiz);
-        liC.removeEventListener("click", beginQuiz);
-        liD.removeEventListener("click", beginQuiz);             // Removes event listener so that the user doesn't keep selecting other options until the next question loads
-        liB.removeEventListener("click", beginQuiz);
-
-        correctImg.style.display = "flex";
-        correctCounter++
-
-        return correctCounter;
-
-    } else if (correctAns !== "b"){
-        return wrongAns();
-    }
-}
-
-function ansC() {
-    if (correctAns === "c") {
-        liA.removeEventListener("click", beginQuiz);
-        liB.removeEventListener("click", beginQuiz);
-        liD.removeEventListener("click", beginQuiz);  
-        liC.removeEventListener("click", beginQuiz);
-
-        correctImg.style.display = "flex";
-        correctCounter++
-
-        return correctCounter;
- 
-    } else if (correctAns !== "c") {
-        return wrongAns();
-    }
-}
-
-function ansD() {
-    if (correctAns === "d") {
-        liA.removeEventListener("click", beginQuiz);
-        liB.removeEventListener("click", beginQuiz);
-        liC.removeEventListener("click", beginQuiz);
-        liD.removeEventListener("click", beginQuiz);
-
-        correctCounter++
-        correctImg.style.display = "flex";  
-
-        return correctCounter;
-
-    } else {
-        return wrongAns();
-    }
-}
 
 function wrongAns() {
     wrongImg.style.display = "flex";        // Displays "Wrong answer" img and sets wrong to true
@@ -409,19 +341,38 @@ function wrongAns() {
 
 
 function viewScores() {
-    scoreButton.style.display = "none";
+    // scoreButton.style.display = "none";
 
     viewHigh.style.display = "flex";
     viewHigh.style.justifyContent = "flex-end";
     viewHigh.style.alignItems = "center";
     viewHigh.style.fontSize = "69%";
-
-    viewHigh.textContent = user + " " + highScore;
+    scoreButton.textContent = " "
+    viewHigh.textContent = user + ": " + highScore;
 }
+
+
 
 startButton.addEventListener("click", beginQuiz)
 
 scoreButton.addEventListener("click", viewScores)
+
+liA.addEventListener("click", function(){
+    debugger;
+    ans("a")
+ })
+
+ liB.addEventListener("click",  function(){
+    ans("b")
+ })
+
+ liC.addEventListener("click",  function(){
+    ans("c")
+ })
+
+ liD.addEventListener("click",  function(){
+    ans("d")
+ })
 
 // On start the question is first displayed and 
 // then the timer begins (1 min). If the user answers
@@ -431,15 +382,8 @@ scoreButton.addEventListener("click", viewScores)
 // reaches 0 then the game is over and the user is presented
 // text box to enter their initials and save their score
 
-
-
-// var oneMinute = 0           // keeps count until reaching 60
-// var twentyFiveMin = 25
-// console.log(time)
-// oneMinute++
-// if (oneMinute === 60) {
-//     oneMinute = 0
-//     twentyFiveMin--
-//     timerEl.textContent = twentyFiveMin + " minutes left";
-// }
-
+// To Do:
+// correct or wrong img aren't displaying
+// User score - not high score - isn't displaying
+// High score keeps displaying on the left of the screen instead of the right
+// Fix decrease timer
