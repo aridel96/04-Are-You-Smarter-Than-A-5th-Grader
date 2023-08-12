@@ -32,7 +32,7 @@ var questions = [                                                     //question
     "answer": "c"},
     {"question": "What is the correct Javascript syntax to change the content of the HTML element <p id='demo'>This is a demonstration.</p>?",
     "answer": "d"},
-    {"question": "Where is the correct place to insert a Javascript?",
+    {"question": "Where is the correct place to insert a Javascript file?",
     "answer": "c"},
     {"question": "What is the correct syntax for reffering to an external script called xxx.js",
     "answer": "b"},
@@ -216,7 +216,36 @@ var multipleChoice = [                                       //multiple choice o
 ]
 
 var correctAns
-var time = 3;                     
+var time = 3;         
+
+
+
+function clearQuiz() {
+    //Call to clear timer
+    if(time === 0 || questionCount === questions.length) {           // If the user has answered all questions or the timer has run out clear the timer
+        clearInterval(timer)
+    
+        liA.style.display = "none";
+        liB.style.display = "none";
+        liC.style.display = "none";
+        liD.style.display = "none";
+    
+        questionEl.style.fontSize = "69%";
+        questionEl.textContent = "Your Score Is: " + correctCounter + " Out Of 20!";
+    
+        if (correctCounter > highScore) {       
+            user = prompt("Enter your initials: ");
+                
+            highScore = correctCounter
+            questionEl.textContent = "Congratulations on your high score!";
+                
+            localStorage.setItem('userName', 'user');               // Saves user's initials and new high score to localStorage
+            localStorage.setItem('highestScore', highScore);
+        }
+    }
+}
+
+
 
 function beginQuiz() { 
     startButton.style.display = "none" 
@@ -226,14 +255,19 @@ function beginQuiz() {
     liC.style.display = "none";
     liD.style.display = "none";
 
-    timerEl.textContent = "3 minutes left";
+    timerEl.textContent = time + " minutes left";
     quiz(questions, multipleChoice)
-
-    timer = setInterval(function() {
-        time--
-        timerEl.textContent = time + " minutes left";
-    }, 60000)
 }
+
+
+
+timer = setInterval(function() {                        // setInterval function for Timer. Decreases and displays time every 60 seconds
+    alert("Timer has begun!" + time)
+    time--
+    timerEl.textContent = time + " minutes left";
+}, 60000)
+
+
 
 function nextQuestion() {
     liA.textContent = " "                       // Clears list items or answer choices
@@ -244,67 +278,46 @@ function nextQuestion() {
     correctImg.style.display = "none"           // Clears images
     wrongImg.style.display = "none"
 
-
-    //Call to clear timer
-    if(time === 0 || questionCount === questions.length) {           // If the user has answered all questions or the timer has run out clear the timer
-        clearInterval(timer)
-
-        liA.style.display = "none";
-        liB.style.display = "none";
-        liC.style.display = "none";
-        liD.style.display = "none";
-
-        questionEl.style.fontSize = "69%";
-        questionEl.textContent = "Your Score Is: " + correctCounter + " Out Of 25!";
-
-        if (correctCounter > highScore) {       
-            user = prompt("Enter your initials: ");
-            
-            highScore = correctCounter
-            questionEl.textContent = "Congratulations on your high score!";
-            
-            localStorage.setItem('userName', 'user');               // Saves user's initials and new high score to localStorage
-            localStorage.setItem('highestScore', highScore);
-        }
-    }
     quiz(questions, multipleChoice)
 }
 
 
 
 function quiz(questions, multipleChoice) {
-    alert("We've made it!")
+    clearQuiz()
 
     //Print out question
-    quest = questions[questionCount].question
-    questionEl.textContent = quest
-    correctAns = questions[questionCount].answer
-
-    liA.style.display = "list-item"     
-    liB.style.display = "list-item"                        
-    liC.style.display = "list-item"                        
-    liD.style.display = "list-item" 
-
-    for (var choices in multipleChoice[questionCount]) {
-        // //Display answer choices
-         if (choices === "a") {
-             choiceA = multipleChoice[questionCount].a
-             liA.textContent = choiceA
-        }
-
-        if (choices === "b") {
-            choiceB = multipleChoice[questionCount].b
-            liB.textContent = choiceB
-        } 
-
-        if (choices === "c") {
-            choiceC = multipleChoice[questionCount].c
-            liC.textContent = choiceC
-        } 
-
-        if (choices === "d") {
-            choiceD = multipleChoice[questionCount].d
-            liD.textContent = choiceD
+    if (questionCount < questions.length) {
+        quest = questions[questionCount].question
+        questionEl.textContent = quest
+        correctAns = questions[questionCount].answer
+    
+        liA.style.display = "list-item"     
+        liB.style.display = "list-item"                        
+        liC.style.display = "list-item"                        
+        liD.style.display = "list-item" 
+    
+        for (var choices in multipleChoice[questionCount]) {
+            // //Display answer choices
+             if (choices === "a") {
+                 choiceA = multipleChoice[questionCount].a
+                 liA.textContent = choiceA
+            }
+    
+            if (choices === "b") {
+                choiceB = multipleChoice[questionCount].b
+                liB.textContent = choiceB
+            } 
+    
+            if (choices === "c") {
+                choiceC = multipleChoice[questionCount].c
+                liC.textContent = choiceC
+            } 
+    
+            if (choices === "d") {
+                choiceD = multipleChoice[questionCount].d
+                liD.textContent = choiceD
+            }
         }
     }
     questionCount++
@@ -319,22 +332,34 @@ function ans(letter) {
     if (correctAns === letter) {              // Displays "correct!" img and increase correct answer counter 
         correctImg.style.display = "flex";
         correctCounter++
-        
-        nextQuestion()
-        return correctCounter;
 
-    } else{
-        wrongAns()                              // Calls wrongAns and then loads next question
+        var delay = setInterval(function(){
+            // console.log("Loading image before calling next question")
+            
+        }, 2000)
+
         nextQuestion()
-        return wrongAns();
+    } else{
+        // wrongAns()                              // Calls wrongAns and then loads next question
+
+        var delay = setInterval(function(){
+            // console.log("Loading image before calling next question")
+            
+        }, 2000)
+
+        return wrongAns()
     }
 
+    clearInterval(delay)
+    return correctCounter;
 }
-
 
 function wrongAns() {
     wrongImg.style.display = "flex";        // Displays "Wrong answer" img and sets wrong to true
     time--
+
+    nextQuestion()
+
     return time
 }
 
@@ -358,7 +383,6 @@ startButton.addEventListener("click", beginQuiz)
 scoreButton.addEventListener("click", viewScores)
 
 liA.addEventListener("click", function(){
-    debugger;
     ans("a")
  })
 
