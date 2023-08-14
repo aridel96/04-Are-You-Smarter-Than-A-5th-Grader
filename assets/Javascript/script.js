@@ -3,8 +3,8 @@ var startButton = document.querySelector(".button")
 var timerEl = document.querySelector("#timer")
 var questionEl = document.querySelector("#question")
 var answersEl = document.getElementById("answers")
-var correctImg = document.getElementById("correctImg")
-var wrongImg = document.getElementById("wrongImg")
+// var correctImg = document.getElementById("correctImg")
+// var wrongImg = document.getElementById("wrongImg")
 var scoreButton = document.querySelector(".scores")
 var viewHigh = document.getElementById("high-score")
 
@@ -276,8 +276,8 @@ function nextQuestion() {
     liC.textContent = " "
     liD.textContent = " "    
 
-    correctImg.style.display = "none"           // Clears images
-    wrongImg.style.display = "none"
+    // correctImg.style.display = "none"           // Clears images
+    // wrongImg.style.display = "none"
 
     clearQuiz()
     quiz(questions, multipleChoice)
@@ -330,34 +330,35 @@ function quiz(questions, multipleChoice) {
 function ans(letter) {
     //Compare correct answer to user answer
     //Increment correctCounter if correct or decrement timer if wrong
+    // var delay;
 
     if (correctAns === letter) {              // Displays "correct!" img and increase correct answer counter 
-        correctImg.style.display = "flex";
         correctCounter++
+        // correctImg.style.display = "block";
 
-        var delay = setInterval(function(){
-            // console.log("Loading image before calling next question")
-            
-        }, 2000)
+        // delay = setTimeout(function(){
+        //     console.log("Loading image before calling next question")
+        //     correctImg.style.display = "none";
 
         nextQuestion()
+        // }, 500)
+        // clearTimeout(delay)
     } else{
-        // wrongAns()                              // Calls wrongAns and then loads next question
+        return wrongAns()                              // Calls wrongAns and then loads next question
 
-        var delay = setInterval(function(){
-            // console.log("Loading image before calling next question")
-            
-        }, 2000)
-
-        return wrongAns()
+        // delay = setTimeout(function(){
+        //     console.log("Loading image before calling next question")
+        //     wrongImg.style.display = "none";
+        //     return wrongAns()
+        // }, 1000)
+        // clearTimeout(delay)
     }
 
-    clearInterval(delay)
     return correctCounter;
 }
 
 function wrongAns() {
-    wrongImg.style.display = "flex";        // Displays "Wrong answer" img and sets wrong to true
+    // wrongImg.style.display = "flex";        // Displays "Wrong answer" img and sets wrong to true
 
     time--
     timerEl.textContent = time + " minutes left";
