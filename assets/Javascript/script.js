@@ -231,7 +231,6 @@ function clearQuiz() {
         liD.style.display = "none";
     
         questionEl.style.fontSize = "69%";
-        questionEl.textContent = "Your Score Is: " + correctCounter + " Out Of 20!";
     
         if (correctCounter >= highScore) {       
             user = prompt("Enter your initials: ");
@@ -241,6 +240,13 @@ function clearQuiz() {
                 
             localStorage.setItem('userName', user);               // Saves user's initials and new high score to localStorage
             localStorage.setItem('highestScore', highScore);
+        } else {
+            user = prompt("Enter your initials: ");
+                    
+            localStorage.setItem('userName', user);               // Saves user's initials and new high score to localStorage
+            localStorage.setItem('loser', correctCounter);
+
+            questionEl.textContent = "Your Score Is: " + correctCounter + " Out Of 20!";
         }
     }
 }
