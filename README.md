@@ -7,8 +7,10 @@ This project focuses on using Web API's to build a timed quiz. Through this proj
 
 ## Code Source
 * CSS .choices:hover and .button:hover - https://stackoverflow.com/questions/6422790/css-create-white-glow-around-image
-*
+
 ## Screenshot and Link
+https://aridel96.github.io/04-Are-You-Smarter-Than-A-5th-Grader/
+![screenshot](image.png)
 
 ## License
 MIT
