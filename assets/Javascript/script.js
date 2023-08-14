@@ -233,13 +233,13 @@ function clearQuiz() {
         questionEl.style.fontSize = "69%";
         questionEl.textContent = "Your Score Is: " + correctCounter + " Out Of 20!";
     
-        if (correctCounter > highScore) {       
+        if (correctCounter >= highScore) {       
             user = prompt("Enter your initials: ");
                 
             highScore = correctCounter
             questionEl.textContent = "Congratulations on your high score!";
                 
-            localStorage.setItem('userName', 'user');               // Saves user's initials and new high score to localStorage
+            localStorage.setItem('userName', user);               // Saves user's initials and new high score to localStorage
             localStorage.setItem('highestScore', highScore);
         }
     }
@@ -262,8 +262,9 @@ function beginQuiz() {
 
 
 timer = setInterval(function() {                        // setInterval function for Timer. Decreases and displays time every 60 seconds
-    alert("Timer has begun!" + time)
     time--
+    clearQuiz()
+
     timerEl.textContent = time + " minutes left";
 }, 60000)
 
@@ -278,6 +279,7 @@ function nextQuestion() {
     correctImg.style.display = "none"           // Clears images
     wrongImg.style.display = "none"
 
+    clearQuiz()
     quiz(questions, multipleChoice)
 }
 
@@ -356,18 +358,22 @@ function ans(letter) {
 
 function wrongAns() {
     wrongImg.style.display = "flex";        // Displays "Wrong answer" img and sets wrong to true
+
     time--
+    timerEl.textContent = time + " minutes left";
+    
+    if (time === 0) {
+        return clearQuiz()
+    }
 
     nextQuestion()
 
-    return time
+    // return time
 }
 
 
 
 function viewScores() {
-    // scoreButton.style.display = "none";
-
     viewHigh.style.display = "flex";
     viewHigh.style.justifyContent = "flex-end";
     viewHigh.style.alignItems = "center";
@@ -408,6 +414,3 @@ liA.addEventListener("click", function(){
 
 // To Do:
 // correct or wrong img aren't displaying
-// User score - not high score - isn't displaying
-// High score keeps displaying on the left of the screen instead of the right
-// Fix decrease timer
